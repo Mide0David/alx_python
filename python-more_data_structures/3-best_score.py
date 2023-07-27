@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
 def best_score(a_dictionary):
-    biggest = 0
-    key_big = ""
+    biggest = float('-inf')
+    key_big = None
     if a_dictionary == None:
         return None
     for key, value in a_dictionary.items():
-        if value > biggest:
+        if isinstance(value, int) and value > biggest:
             biggest = value
             key_big = key
     return key_big
