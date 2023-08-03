@@ -1,46 +1,77 @@
 """
-    This module contains a class for geometric shapes
+    This module define various 
+    geometric shapes
 """
 class BaseGeometry:
     """
-    Base class for geometric shapes.
+    Base class for geometry-related objects.
 
-    This class provides a foundation for creating geometric shapes and defining their properties.
-    It contains a method 'area' that raises an exception as it needs to be implemented by subclasses.
-    Additionally, the 'integer_validator' method is provided to validate integer values for shape properties.
+    This class serves as the foundation for defining various geometric shapes
+    and their corresponding properties and methods.
 
     Methods:
-    1. area(): This method raises an Exception as it needs to be implemented by subclasses to calculate the area.
-    2. integer_validator(name, value): Validates that the given 'value' is an integer and greater than 0.
+        area(self) -> None:
+            Placeholder method to calculate the area of the geometric shape.
 
+            Raises:
+                Exception: This method is not implemented in the base class and
+                           should be overridden in subclasses to provide specific
+                           implementations for calculating the area of a particular shape.
+
+        integer_validator(self, name: str, value: int) -> None:
+            Validates an integer value for a given property.
+
+            This method checks if the provided value is an integer and greater than 0.
+
+            Parameters:
+                name (str): The name of the property being validated.
+                value (int): The value to be validated.
+
+            Raises:
+                TypeError: If the provided value is not an integer.
+                ValueError: If the provided value is not greater than 0.
+
+            Returns:
+                None
     """
 
     def area(self):
-        """
-        Calculate the area of the geometric shape.
-
-        This method is not implemented in the base class and must be overridden in subclasses.
-
-        Raises:
-            Exception: As this method is not implemented, calling it will raise an Exception.
-
-        """
         raise Exception("area() is not implemented")
 
     def integer_validator(self, name, value):
-        """
-        Validate the integer value for a shape property.
-
-        Args:
-            name (str): The name of the property being validated.
-            value (int): The value of the property to be validated.
-
-        Raises:
-            TypeError: If the 'value' is not an integer.
-            ValueError: If the 'value' is less than or equal to 0.
-
-        """
         if not isinstance(value, int):
             raise TypeError("{} must be an integer".format(name))
         if value <= 0:
             raise ValueError("{} must be greater than 0".format(name))
+
+class Rectangle(BaseGeometry):
+    """
+    Rectangle class representing a rectangle shape.
+
+    This class inherits from BaseGeometry and provides an implementation for the area method.
+    It also has an __init__ method to initialize the rectangle with width and height properties.
+
+    Attributes:
+        __width (int): The width of the rectangle.
+        __height (int): The height of the rectangle.
+
+    Methods:
+        area(): Calculate the area of the rectangle (width * height).
+        __str__(): Return a string representation of the rectangle in the format "[Rectangle] width/height".
+
+    """
+
+    def __init__(self, width, height):
+        """
+        Initialize a rectangle with the given width and height.
+
+        Args:
+            width (int): The width of the rectangle.
+            height (int): The height of the rectangle.
+
+        """
+        self.__width = width
+        self.integer_validator("width", self.__width)
+
+        self.__height = height
+        self.integer_validator("height", self.__height)
