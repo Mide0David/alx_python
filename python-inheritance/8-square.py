@@ -1,20 +1,24 @@
 """
-    This module creates a class to represent
-    basic geometric shape
+    this is a module class about different 
+    geometric shapes
 """
+
 class BaseGeometry:
     """
-    A base class representing a geometric shape.
+    Base class for geometric shapes.
+
+    This class provides a foundation for creating geometric shapes and defining their properties.
+    It contains a method 'area' that raises an exception as it needs to be implemented by subclasses.
+    Additionally, the 'integer_validator' method is provided to validate integer values for shape properties.
 
     Methods:
-        area(): This method is meant to be implemented by subclasses to calculate the area of the shape.
+    1. area(): This method raises an Exception as it needs to be implemented by subclasses to calculate the area.
+    2. integer_validator(name, value): Validates that the given 'value' is an integer and greater than 0.
 
-        integer_validator(name, value): Validates that the given value is an integer greater than 0.
-            Raises a TypeError if the value is not an integer or a ValueError if the value is less than or equal to 0.
     """
 
     def area(self):
-         """
+        """
         Calculate the area of the geometric shape.
 
         This method is not implemented in the base class and must be overridden in subclasses.
@@ -23,11 +27,10 @@ class BaseGeometry:
             Exception: As this method is not implemented, calling it will raise an Exception.
 
         """
-
         raise Exception("area() is not implemented")
 
     def integer_validator(self, name, value):
-         """
+        """
         Validate the integer value for a shape property.
 
         Args:
@@ -37,6 +40,7 @@ class BaseGeometry:
         Raises:
             TypeError: If the 'value' is not an integer.
             ValueError: If the 'value' is less than or equal to 0.
+
         """
         if not isinstance(value, int):
             raise TypeError("{} must be an integer".format(name))
@@ -45,7 +49,7 @@ class BaseGeometry:
 
 
 class Rectangle(BaseGeometry):
-        """
+    """
     Rectangle class representing a rectangle shape.
 
     This class inherits from BaseGeometry and provides an implementation for the area method.
@@ -62,7 +66,7 @@ class Rectangle(BaseGeometry):
     """
 
     def __init__(self, width, height):
-         """
+        """
         Initialize a rectangle with the given width and height.
 
         Args:
@@ -72,7 +76,7 @@ class Rectangle(BaseGeometry):
         """
         self.__width = width
         self.integer_validator("width", self.__width)
-        
+
         self.__height = height
         self.integer_validator("height", self.__height)
 
@@ -95,8 +99,6 @@ class Rectangle(BaseGeometry):
 
         """
         return "[Rectangle] {}/{}".format(self.__width, self.__height)
-
-
 class Square(Rectangle):
     """
     A class representing a square, a special case of a rectangle.
@@ -126,4 +128,3 @@ class Square(Rectangle):
 
         """
         return "[Square] {}/{}".format(self._Rectangle__width, self._Rectangle__height)
-
