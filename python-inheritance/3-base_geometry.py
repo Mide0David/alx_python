@@ -1,7 +1,7 @@
 """
 This module contains an empty class
 """
-class BaseGeometry:
+class BaseGeometry():
     """
     Base class for geometry-related objects.
 
