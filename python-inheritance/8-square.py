@@ -1,5 +1,6 @@
 """
-This module creates a class to represent basic geometric shape
+    This module creates a class to represent
+    basic geometric shape
 """
 class BaseGeometry:
     """
