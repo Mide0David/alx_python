@@ -1,3 +1,6 @@
+"""
+    This module contains a class for geometric shapes
+"""
 class BaseGeometry:
     """
     Base class for geometric shapes.
