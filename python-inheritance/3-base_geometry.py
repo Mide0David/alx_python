@@ -16,4 +16,5 @@ class BaseGeometry():
     Methods:
         None
     """
-    pass
+    def __init__(self):
+        pass
