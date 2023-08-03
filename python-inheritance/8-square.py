@@ -108,5 +108,21 @@ class Square(Rectangle):
     """
 
     def __init__(self, size):
+        """
+        Initialize a square with the given size.
+
+        Args:
+            size (int): The size of the square (both width and height).
+
+        """
         super().__init__(size, size)
+    def __str__(self):
+        """
+        Return a string representation of the square.
+
+        Returns:
+            str: A string representation of the square in the format "[Square] size/size".
+
+        """
+        return "[Square] {}/{}".format(self._Rectangle__width, self._Rectangle__height)
 
