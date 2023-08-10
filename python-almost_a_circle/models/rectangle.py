@@ -145,3 +145,57 @@ class Rectangle(Base):
             raise ValueError("y must be >= 0")
 
         self.__y = value
+
+    def area(self):
+        """
+        Calculate the area of the rectangle.
+
+        Returns:
+            int: The area of the rectangle.
+        """
+        return self.__width * self.__height
+
+    def display(self):
+        """
+        Display the rectangle using '#' characters.
+
+        Returns:
+            None
+        """
+        for vertical in range(0, self.__y):
+            print()
+        for column in range(0, self.__height):
+            for horizontal in range(0, self.__x):
+                print(" ", end="")
+            for row in range(0, self.__width):
+                print("#", end="")
+            print()
+
+    def update(self, *args, **kwargs):
+        """
+        Update the attributes of the rectangle using either positional arguments or keyword arguments.
+
+        Args:
+            *args: Positional arguments (id, width, height, x, y).
+            **kwargs: Keyword arguments for attributes.
+
+        Returns:
+            None
+        """
+        if args:
+            attributes = ["id", "width", "height", "x", "y"]
+            for i, value in enumerate(args):
+                if i < len(attributes):
+                    setattr(self, attributes[i], value)
+        else:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+
+    def __str__(self):
+        """
+        Return a string representation of the rectangle.
+
+        Returns:
+            str: The formatted string representation of the rectangle.
+        """
+        return "[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.__x, self.__y, self.__width, self.__height)
