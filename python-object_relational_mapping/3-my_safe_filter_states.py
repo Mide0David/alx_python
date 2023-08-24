@@ -11,7 +11,7 @@ if __name__ == "__main__":
     username = sys.argv[1]
     password = sys.argv[2]
     database = sys.argv[3]
-    ns = sys.argv[4]
+    name = sys.argv[4]
 
     try:
         db = MySQLdb.connect(
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     query = "SELECT * FROM states WHERE name LIKE BINARY %s ORDER BY id ASC"
 
     try:
-        cursor.execute(query, (state_name,))
+        cursor.execute(query, (name,))
         states = cursor.fetchall()
     except MySQLdb.Error as e:
         print("Error executing query", e)
