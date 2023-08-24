@@ -17,7 +17,7 @@ if __name__ == "__main__":
                 user=username,
                 port=3306,
                 host="localhost",
-                passwd = password,
+                passwd=password,
                 db=database
                 )
         cursor = db.cursor()
@@ -34,8 +34,8 @@ if __name__ == "__main__":
         print("Error executing query", e)
         db.close()
         sys.exit(1)
-    
+
     for state in states:
-        print(state);
+        print(state)
 
     db.close()
