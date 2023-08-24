@@ -11,7 +11,7 @@ if __name__ == "__main__":
     username = sys.argv[1]
     password = sys.argv[2]
     database = sys.argv[3]
-    state_name = sys.argv[4]
+    ns = sys.argv[4]
 
     try:
         db = MySQLdb.connect(
@@ -26,10 +26,10 @@ if __name__ == "__main__":
         print("Error connecting to the database:", e)
         sys.exit(1)
 
-    query = "SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC"
+    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(ns)
 
     try:
-        cursor.execute(query, (state_name,))
+        cursor.execute(query)
         states = cursor.fetchall()
     except MySQLdb.Error as e:
         print("Error executing query", e)
