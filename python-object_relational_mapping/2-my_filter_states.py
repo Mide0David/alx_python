@@ -27,8 +27,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     query = ("SELECT * FROM states WHERE name LIKE BINARY '"
-            + "{}' ORDER BY id ASC".format(ns)
-            )
+            "{}' ORDER BY id ASC").format(ns)
 
     try:
         cursor.execute(query)
