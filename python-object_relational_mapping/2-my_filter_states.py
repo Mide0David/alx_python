@@ -26,7 +26,9 @@ if __name__ == "__main__":
         print("Error connecting to the database:", e)
         sys.exit(1)
 
-    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(ns)
+    query = ("SELECT * FROM states WHERE name LIKE BINARY '"
+            + "{}' ORDER BY id ASC".format(ns)
+            )
 
     try:
         cursor.execute(query)
