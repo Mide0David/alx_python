@@ -1,6 +1,6 @@
 """
     Flask Application Documentation
-    displays messages
+    returns two msg
 """
 
 from flask import Flask
@@ -18,6 +18,16 @@ def index():
     """
     return "Hello HBNB!"
 
+@app.route("/hbnb", strict_slashes=False)
+def hbn():
+    """
+    Route handler for the "/hbnb" URL.
+    
+    Returns:
+        str: The response message "HBNB".
+    """
+    return "HBNB"
+
 if __name__ == "__main__":
     # Start the Flask development server
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
