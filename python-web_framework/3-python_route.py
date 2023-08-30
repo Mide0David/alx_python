@@ -4,9 +4,9 @@ Displays messages on multiple pages with dynamic content
 """
 
 from flask import Flask
-
 # Create a Flask application instance
 app = Flask(__name__)
+
 
 @app.route("/", strict_slashes=False)
 def index():
@@ -39,7 +39,8 @@ def two(text):
     Returns:
         str: A message "C <text>" where <text> is the provided text.
     """
-    return f"C {text}"
+        return "C " + text.replace("_", " ")
+
 
 @app.route("/python", strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
@@ -54,9 +55,9 @@ def three(text=None):
         str: A message based on the provided text or a default message if no text is provided.
     """
     if text is None or text == "":
-        return "python is cool"
+        return "Python is cool"
     else:
-        return f"python {text}"
+        return "Python " + text.replace("_", " ")
 
 if __name__ == "__main__":
     # Start the Flask development server
