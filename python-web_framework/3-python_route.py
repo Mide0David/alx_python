@@ -39,7 +39,7 @@ def two(text):
     Returns:
         str: A message "C <text>" where <text> is the provided text.
     """
-        return "C " + text.replace("_", " ")
+    return "C " + text.replace("_", " ")
 
 
 @app.route("/python", strict_slashes=False)
