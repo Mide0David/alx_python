@@ -39,7 +39,7 @@ def two(text):
     Returns:
         str: A message "C <text>" where <text> is the provided text.
     """
-    return f"C {text}"
+    return "C" + text.replace("_", " ")
 
 @app.route("/python", strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
@@ -56,7 +56,7 @@ def three(text=None):
     if text is None or text == "":
         return "python is cool"
     else:
-        return f"python {text}"
+        return "Python" + text.replace("_" + " ")
 
 @app.route("/number/<int:n>", strict_slashes=False)
 def four(n):
