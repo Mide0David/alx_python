@@ -28,7 +28,7 @@ def hbn():
     """
     return "HBNB"
 
-@app.route("/c/<:text>", strict_slashes=False)
+@app.route("/c/<text>", strict_slashes=False)
 def two(text):
     """
     Route handler for the "/c/<text>" URL.
