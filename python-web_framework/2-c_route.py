@@ -12,7 +12,7 @@ app = Flask(__name__)
 def index():
     """
     Route handler for the root URL ("/").
-    
+
     Returns:
         str: The response message "Hello HBNB!".
     """
@@ -22,24 +22,25 @@ def index():
 def hbn():
     """
     Route handler for the "/hbnb" URL.
-    
+
     Returns:
         str: The response message "HBNB".
     """
     return "HBNB"
 
-@app.route("/c/<:text>", strict_slashes=False)
+@app.route("/c/<text>", strict_slashes=False)
 def two(text):
     """
     Route handler for the "/c/<text>" URL.
-    
+
     Parameters:
         text (str): The text provided in the URL.
-    
+
     Returns:
+                                                            34,16         70%
         str: A message "C <text>" where <text> is the provided text.
     """
-        return "C" + text.replace("_", " ")
+    return "C " + text.replace("_", " ")
 
 if __name__ == "__main__":
     # Start the Flask development server
