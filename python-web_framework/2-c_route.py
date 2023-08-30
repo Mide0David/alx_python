@@ -28,8 +28,9 @@ def hbn():
     """
     return "HBNB"
 
-@app.route("/c/<text>", strict_slashes=False)
-def two(text):
+@app.route("/c", strict_slashes=False)
+@app.route("/c/<:text>", strict_slashes=False)
+def two(text=None):
     """
     Route handler for the "/c/<text>" URL.
     
@@ -39,7 +40,10 @@ def two(text):
     Returns:
         str: A message "C <text>" where <text> is the provided text.
     """
-    return f"C {text}"
+    if text is None or text == " ":
+        return "C"
+    else:
+        return "C" + text.replace("_", " ")
 
 if __name__ == "__main__":
     # Start the Flask development server
