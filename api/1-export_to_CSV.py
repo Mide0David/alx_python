@@ -1,6 +1,6 @@
+import csv
 import requests
 import sys
-import csv
 
 if __name__ == '__main__':
 
@@ -19,10 +19,15 @@ if __name__ == '__main__':
     num_of_done_tasks = sum(1 for task in todo_data if task['completed'] )
     total_num_task = len(todo_data)
 
-    csv_file = "USER_ID.csv"
+    print(f"Employee {employee_name} is done with tasks({num_of_done_tasks}/{total_num_task}):")
+
+    for task in todo_data:
+        if task['completed']:
+            print(f"\t{task['title']}")
+
 
     with open(f'{id}.csv', mode='w', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file)
+        csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         csv_writer.writerow(['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS', 'TASK_TITLE'])
         
         for task in todo_data:
