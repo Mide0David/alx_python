@@ -1,10 +1,11 @@
+
 """
     This module fetches employee information
     and their to-do list from a REST API and saves it in a JSON file.
 """
+import json
 import requests
 import sys
-import json
 
 # Define a function to fetch employee information
 def get_employee_info(employee_id):
