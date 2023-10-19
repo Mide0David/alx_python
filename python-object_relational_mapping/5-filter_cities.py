@@ -25,6 +25,7 @@ if __name__ == "__main":
         cursor = conn.cursor()
 
         query = """
+        USE test_5
         SELECT GROUP_CONCAT(cities.name ORDER BY cities.id ASC SEPARATOR ', ')
         FROM cities
         JOIN states ON cities.state_id = states.id
