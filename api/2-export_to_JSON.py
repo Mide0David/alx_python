@@ -6,7 +6,6 @@ import json
 import requests
 import sys
 
-# Function to fetch employee details
 def fetch_employee_details(user_id):
     """
     Fetches employee details from the REST API.
@@ -24,7 +23,6 @@ def fetch_employee_details(user_id):
     else:
         return None
 
-# Function to fetch employee's TODO list
 def fetch_employee_tasks(user_id):
     """
     Fetches a list of tasks owned by the employee from the REST API.
@@ -42,7 +40,6 @@ def fetch_employee_tasks(user_id):
     else:
         return []
 
-# Function to calculate progress
 def calculate_progress(tasks):
     """
     Calculates the progress of completed tasks.
@@ -57,7 +54,6 @@ def calculate_progress(tasks):
     completed_tasks = sum(1 for task in tasks if task['completed'])
     return completed_tasks, total_tasks
 
-# Function to display progress
 def display_progress(username, completed_tasks, total_tasks):
     """
     Displays the progress of completed tasks for the employee.
@@ -69,7 +65,6 @@ def display_progress(username, completed_tasks, total_tasks):
     """
     print(f"Employee {username} is done with tasks({completed_tasks}/{total_tasks}):")
 
-# Function to display completed task titles
 def display_completed_tasks(tasks):
     """
     Displays the titles of completed tasks.
@@ -82,7 +77,6 @@ def display_completed_tasks(tasks):
             formatted_task_title = "\t {}".format(task['title'])
             print(formatted_task_title)
 
-# Function to export data to a JSON file
 def export_to_json(user_id, username, tasks):
     """
     Exports employee tasks to a JSON file.
@@ -125,4 +119,3 @@ if __name__ == "__main":
         display_completed_tasks(tasks)
         export_to_json(user_id, username, tasks)
         print(f"Tasks exported to {user_id}.json")
-"""
