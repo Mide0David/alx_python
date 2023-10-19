@@ -1,4 +1,3 @@
-
 """
     This module fetches employee information
     and their to-do list from a REST API and saves it in a JSON file.
@@ -7,76 +6,123 @@ import json
 import requests
 import sys
 
-# Define a function to fetch employee information
-def get_employee_info(employee_id):
+# Function to fetch employee details
+def fetch_employee_details(user_id):
     """
-    Fetches employee information from the API.
+    Fetches employee details from the REST API.
 
     Args:
-        employee_id (int): The ID of the employee.
+        user_id (int): The user ID for the employee.
 
     Returns:
-        dict: A dictionary containing employee information.
+        dict or None: A dictionary containing employee details or None if not found.
     """
-    employee_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    response = requests.get(employee_url)
-    data = response.json()
-    return data
+    url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
 
-# Define a function to fetch the to-do list of an employee
-def get_todo_list(employee_id):
+# Function to fetch employee's TODO list
+def fetch_employee_tasks(user_id):
     """
-    Fetches the to-do list of an employee from the API.
+    Fetches a list of tasks owned by the employee from the REST API.
 
     Args:
-        employee_id (int): The ID of the employee.
+        user_id (int): The user ID for the employee.
 
     Returns:
-        list: A list of to-do tasks for the employee.
+        list: A list of tasks in JSON format.
     """
-    todo_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
-    response = requests.get(todo_url)
-    todo_data = response.json()
-    return todo_data
+    url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return []
 
-# Define a function to process and save employee data to a JSON file
-def save_employee_data_to_json(employee_id):
+# Function to calculate progress
+def calculate_progress(tasks):
     """
-    Fetches employee information and to-do list, processes the data,
-    and saves it to a JSON file.
+    Calculates the progress of completed tasks.
 
     Args:
-        employee_id (int): The ID of the employee.
+        tasks (list): A list of tasks.
+
+    Returns:
+        tuple: A tuple containing completed tasks and total tasks.
     """
-    employee_info = get_employee_info(employee_id)
-    employee_name = employee_info['name']
+    total_tasks = len(tasks)
+    completed_tasks = sum(1 for task in tasks if task['completed'])
+    return completed_tasks, total_tasks
 
-    todo_list = get_todo_list(employee_id)
-    num_of_done_tasks = sum(1 for task in todo_list if task['completed'])
-    total_num_tasks = len(todo_list)
+# Function to display progress
+def display_progress(username, completed_tasks, total_tasks):
+    """
+    Displays the progress of completed tasks for the employee.
 
-    print(f"Employee {employee_name} is done with tasks ({num_of_done_tasks}/{total_num_tasks}):")
+    Args:
+        username (str): The username of the employee.
+        completed_tasks (int): The number of completed tasks.
+        total_tasks (int): The total number of tasks.
+    """
+    print(f"Employee {username} is done with tasks({completed_tasks}/{total_tasks}):")
 
-    json_data = {
-        employee_id: [
-            {
-                "task": task["title"],
-                "completed": task["completed"],
-                "username": employee_name
-            }
-            for task in todo_list
-        ]
-    }
+# Function to display completed task titles
+def display_completed_tasks(tasks):
+    """
+    Displays the titles of completed tasks.
 
-    with open(f'{employee_id}.json', mode='w') as json_file:
-        json.dump(json_data, json_file, indent=4)
+    Args:
+        tasks (list): A list of tasks.
+    """
+    for task in tasks:
+        if task['completed']:
+            formatted_task_title = "\t {}".format(task['title'])
+            print(formatted_task_title)
 
-if __name__ == '__main__':
-    # Check if an employee ID is provided as a command-line argument
+# Function to export data to a JSON file
+def export_to_json(user_id, username, tasks):
+    """
+    Exports employee tasks to a JSON file.
+
+    Args:
+        user_id (int): The user ID for the employee.
+        username (str): The username of the employee.
+        tasks (list): A list of tasks.
+
+    Outputs:
+        Creates a JSON file with the employee's tasks.
+    """
+    data = {str(user_id): []}
+    for task in tasks:
+        data[str(user_id)].append({
+            "task": task['title'],
+            "completed": bool(task['completed']),
+            "username": username
+        })
+
+    file_name = f"{user_id}.json"
+    with open(file_name, 'w') as json_file:
+        json.dump(data, json_file, indent=2)
+
+if __name__ == "__main":
     if len(sys.argv) != 2:
-        print("Usage: python script.py <employee_id>")
+        print("Usage: python modified_script.py <user_id>")
         sys.exit(1)
 
-    employee_id = int(sys.argv[1])
-    save_employee_data_to_json(employee_id)
+    user_id = int(sys.argv[1])
+    employee_details = fetch_employee_details(user_id)
 
+    if employee_details is None:
+        print(f"Employee with ID {user_id} not found.")
+    else:
+        username = employee_details['username']
+        tasks = fetch_employee_tasks(user_id)
+        completed_tasks, total_tasks = calculate_progress(tasks)
+        display_progress(username, completed_tasks, total_tasks)
+        display_completed_tasks(tasks)
+        export_to_json(user_id, username, tasks)
+        print(f"Tasks exported to {user_id}.json")
+"""
