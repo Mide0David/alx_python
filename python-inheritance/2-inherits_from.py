@@ -4,10 +4,11 @@ of its subclass
 
 """
 def inherits_from(obj, a_class):
+
     """
     Check if the given object is an instance of the specified class or its subclass.
 
-    Parameters:
+    Args:
         obj: Any object - The object to be checked.
         a_class: type - The class to compare the object's type with.
 
