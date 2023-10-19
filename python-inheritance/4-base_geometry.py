@@ -1,8 +1,6 @@
 """
     This module serves as a foundation for defining various shapes 
     and their properties and methods
-
-
 """
 
 class BaseGeometryMeta(type):
@@ -15,6 +13,9 @@ class BaseGeometryMeta(type):
     """
 
     def __dir__(cls):
+                """
+        Exclude attribute init subclass in dir()
+        """
         attributes = super().__dir__()
 
         return [
@@ -42,6 +43,9 @@ class BaseGeometry(metaclass=BaseGeometryMeta):
     """
 
      def __dir__(self):
+                 """
+        Exclude attribute init subclass in dir()
+        """
 
         attributes = super().__dir__()
 
