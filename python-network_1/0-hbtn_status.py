@@ -4,5 +4,5 @@ url = "https://alu-intranet.hbtn.io/status"
 response = requests.get(url)
 
 print("Body response:")
-print("    - type: <class 'str'>")
-print(f"    - content: {response.text}")
+print("\t- type: <class 'str'>")
+print(f"\t- content: {response.text}")
