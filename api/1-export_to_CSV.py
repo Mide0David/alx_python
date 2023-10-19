@@ -2,35 +2,41 @@ import csv
 import requests
 import sys
 
-if __name__ == '__main__':
+# Function to fetch tasks for a specific user
+def fetch_tasks(user_id):
+    url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return []
 
-    id = sys.argv[1]
-    todo = f"https://jsonplaceholder.typicode.com/users/{id}/todos"
-    employee = f"https://jsonplaceholder.typicode.com/users/{id}"
-
-    #employee name
-    response = requests.get(employee)
-    data = response.json()
-    employee_name = data['name']
-
-    #todo list
-    todo_result = requests.get(todo)
-    todo_data = todo_result.json()
-    num_of_done_tasks = sum(1 for task in todo_data if task['completed'] )
-    total_num_task = len(todo_data)
-
-    print(f"Employee {employee_name} is done with tasks({num_of_done_tasks}/{total_num_task}):")
-
-    for task in todo_data:
-        if task['completed']:
-            print(f"\t{task['title']}")
-
-
-    with open(f'{id}.csv', mode='w', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
-        csv_writer.writerow(['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS', 'TASK_TITLE'])
+# Function to export tasks to a CSV file
+def export_to_csv(user_id, tasks):
+    file_name = f"{user_id}.csv"
+    with open(file_name, 'w', newline='') as csvfile:
+        fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
         
-        for task in todo_data:
-            csv_writer.writerow([id, employee_name, task['completed']])
+        for task in tasks:
+            writer.writerow({
+                "USER_ID": user_id,
+                "USERNAME": task['title'],
+                "TASK_COMPLETED_STATUS": str(task['completed']),
+                "TASK_TITLE": task['title']
+            })
 
-    print(f"Data has been exported to {csv_file}")
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python 1-export_to_CSV.py <user_id>")
+        sys.exit(1)
+
+    user_id = int(sys.argv[1])
+    tasks = fetch_tasks(user_id)
+    if not tasks:
+        print(f"No tasks found for user {user_id}")
+    else:
+        export_to_csv(user_id, tasks)
+        print(f"Tasks exported to {user_id}.csv")
+
