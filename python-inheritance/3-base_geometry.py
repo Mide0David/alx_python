@@ -1,14 +1,27 @@
 """
-This module checks if an object is an instance of a specified class
-of its subclass
-
+        # Exclude the attribute __init_subclass__
+Custom metaclass to exclude __init_subclass__
 """
 class BaseGeometryMeta(type):
-    def __new__(cls, name, bases, attrs):
-        # Create a new class instance
-        new_class = super(BaseGeometryMeta, cls).__new__(cls, name, bases, attrs)
-        return new_class
+        """
+    This metaclass is used to remove the __init_subclass__ method from class attributes.
+    """
+    def __dir__(cls):
+        """
+        Exclude the '__init_subclass__' attribute from class attributes when using dir().
+        """
+        attributes = super().__dir__()
+        return [attribute for attribute in attributes if attribute != "__init_subclass__"]
 
+# BaseGeometry class with a custom metaclass
 class BaseGeometry(metaclass=BaseGeometryMeta):
-    pass
-
+        """
+    The BaseGeometry class serves as a base class with the '__init_subclass__' method excluded.
+    """
+    def __dir__(self):
+                """
+        Exclude '__init_subclass__' attribute from instance attributes when using dir().
+        """
+        # Exclude the attribute __init_subclass__
+        attributes = super().__dir__()
+        return [attribute for attribute in attributes if attribute != "__init_subclass__"]
